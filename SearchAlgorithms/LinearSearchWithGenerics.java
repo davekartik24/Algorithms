@@ -8,16 +8,24 @@ public class LinearSearch {
 
 	public <T> int linearSearch(ArrayList<T> inputArray, T searchObj) {
 
+
 		int index = 0;
 
-		for(T element : inputArray) {
+		try {
 
-			if(element.equals(searchObj)) {
-				return index;
+			for(T element : inputArray) {
+
+				if(element.equals(searchObj)) {
+					return index;
+				}
+
+				index++;
+				
 			}
 
-			index++;
-			
+		} catch(NullPointerException ex) {
+
+			System.out.println("The value of the array passes is null");
 		}
 
 		return -1;
@@ -28,7 +36,7 @@ public class LinearSearch {
 
 		LinearSearch searchInstance = new LinearSearch();
 
-		ArrayList<String> inputArray = new ArrayList<>();
+		ArrayList<String> inputArray = null;
 
 		inputArray.add("linear");
 		inputArray.add("Search");

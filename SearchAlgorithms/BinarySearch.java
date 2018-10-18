@@ -1,24 +1,29 @@
+import java.util.*;
+
+// Divide and Conquer Approach is addopted
+// The complexity will be O(log(n)), will require O(nlog(n)) for sorting
+// Will return the index if present or else will return -1
+
 public class BinarySearch {
 
+	public int bSearch(int[] inputArray, int toSearch) {
 
-	public static int divideAndRule(int[] array, int start, int end, int search) {
+		int start = 0;
+		int end = inputArray.length - 1;
 
-		if (end >=  start) {
+		while(start <= end) {
 
 			int mid = start + (end - start)/2;
 
-			if (array[mid] == search) {
+			if(inputArray[mid] == toSearch) return mid;
 
-				return mid;
+			if(inputArray[mid] > toSearch) {
+
+				end = mid - 1;
+			} else {
+
+				start = mid + 1;
 			}
-
-			if (array[mid] > search) {
-
-				return divideAndRule(array, start, mid-1, search);
-			}
-
-			return divideAndRule(array, mid+1, end, search);
-
 		}
 
 		return -1;
@@ -26,13 +31,19 @@ public class BinarySearch {
 
 	public static void main(String[] args) {
 
-		int[] array = {1,2,3,4,5,6,7};
+		BinarySearch instanceSearch = new BinarySearch();
 
-		int length = array.length;
+		int inputArray[] = new int[5];
 
-		int result = divideAndRule(array,0,length-1,6);
+		inputArray[0] = 1;
+		inputArray[1] = 10;
+		inputArray[2] = 9;
+		inputArray[3] = 44;
+		inputArray[4] = 17;
 
-		System.out.println(result);
+		Arrays.sort(inputArray);
+
+		System.out.println("The value is present on index : " + instanceSearch.bSearch(inputArray, 44));
+
 	}
-
 }
