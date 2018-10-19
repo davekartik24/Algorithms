@@ -1,89 +1,89 @@
+import java.util.*;
+
+// The run time is O(nlog(n)), can never be improved as comparison tree is made
+// Sentinals with value Integer.MAX_VALUE are used in the sort method for ease of loop check
+
 public class MergeSort {
 
 
-	public static void merge(int[] array, int start, int mid, int end) {
+	public void sort(int[] inputArray, int start, int mid, int end) {
 
-		int n1 = mid - start + 1;
-		int n2 = end - mid;
+		int tempOneLength = (mid - start) + 1;
 
-		int[] left = new int[n1];
-		int[] right = new int[n2];
+		int tempTwoLength = end - mid;
 
+		int tempOne[] = new int[tempOneLength + 1];
 
-		for (int i = 0; i < n1; i++) {
+		int tempTwo[] = new int[tempTwoLength + 1];
 
-			left[i] = array[start + i];
+		int firstCheck = 0;
+		int secondCheck = 0;
+
+		tempOne[tempOneLength] = Integer.MAX_VALUE;
+		tempTwo[tempTwoLength] = Integer.MAX_VALUE;
+
+		for(int i = start; i <= mid; i++) {
+
+			tempOne[firstCheck] = inputArray[i];
+			firstCheck++;
 		}
 
-		for (int i = 0; i < n2; i++) {
+		for(int j = mid+1; j <= end; j++) {
 
-			right[i] = array[mid + 1 + i];
+			tempTwo[secondCheck] = inputArray[j];
+			secondCheck++;
 		}
-		int i = 0;
-		int j = 0;
-		int k = start;
 
-		while(i < n1 && j < n2) {
+		firstCheck = 0;
+		secondCheck = 0;
 
-			if(left[i] <= right[j]) {
-
-				array[k] = left[i];
-				++i;
-
+		for(int k = start; k <=end; k++) {
+			if(tempOne[firstCheck] <= tempTwo[secondCheck]) {
+				inputArray[k] = tempOne[firstCheck];
+				firstCheck++;
 			} else {
-
-				array[k] = right[j];
-				++j;
+				inputArray[k] = tempTwo[secondCheck];
+				secondCheck++;
 			}
-
-			++k;
-
 		}
 
-		while(i < n1) {
-
-			array[k] = left[i];
-			++i;
-			++k;
-		}
-
-		while(j < n2) {
-
-			array[k] = right[j];
-			++j;
-			++k;
-		}
 	}
 
-
-	public static void sort(int[] array, int start, int end) {
-
-
-		int mid = (end + start) / 2;
+	public void merge(int[] inputArray, int start, int end) {
 
 		if(start < end) {
 
-			sort(array, start, mid);
-			sort(array, mid+1, end);
+			int mid = (start + end)/2;
 
-			merge(array, start, mid, end);
+			merge(inputArray, start, mid);
+			merge(inputArray, mid + 1, end);
+
+			sort(inputArray, start, mid, end);
 
 		}
 	}
 
 
-	public static void main(String[] args) {
-
-		int[] array = {1,43,33,99,23,90};
+	public void mSort(int[] inputArray) {
 
 		int start = 0;
-		int end = array.length - 1;
+		int end = inputArray.length - 1;
 
-		sort(array, start, end);
+		merge(inputArray, start, end);
+	}
 
-		for(int element : array) {
+	public static void main(String[] args) {
 
-			System.out.println(element);
+		MergeSort instanceSort = new MergeSort();
+
+		int[] inputArray = {9, 11, 22, 2, 88, 1};
+
+		instanceSort.mSort(inputArray);
+
+		for(int element : inputArray) {
+
+			System.out.println(element + " ");
 		}
+
 	}
 }

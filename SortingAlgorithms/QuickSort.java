@@ -1,53 +1,83 @@
 import java.util.*;
 
-public class QuickSort {
+// The run time of the QuickSort Theta of nlog(n) but with O(n^2)
+// The worst case depends on the selection of the partition index
+// Even if the best to worst ratio is 1:99 still it will give nlog(n) behaviour
+// Used Randomization for selecting the partition element 
+
+public class QuickSort{
 
 
-	public static void qSort(int[] array, int start, int end) {
+	public void randomPartitionElement(int[] inputArray, int start, int end) {
 
-		if(start < end) {
+		int limit = (end - start);
 
-			int partitionPoint = partition(array, start, end);
+		int randomIndex = (int)(Math.random() * limit);
 
-			qSort(array, start, partitionPoint - 1);
-			qSort(array, partitionPoint + 1, end);
-
-		}
+		int temp = inputArray[randomIndex];
+		inputArray[randomIndex] = inputArray[end];
+		inputArray[end] = temp; 
 	}
 
 
-	public static int partition(int[] array, int start, int end) {
+	public int partition(int[] inputArray, int start, int end) {
 
-		int toStart = array[end];
+		int index = start;
 
-		int i = start;
+		randomPartitionElement(inputArray,start, end); 
 
-		for(int j = start; j < end; j++) {
+		int compareElement = inputArray[end];
 
-			if(array[j] < toStart) {
+		for(int i = start; i < end; i++) {
 
-				int temp = array[i];
-				array[i] = array[j];
-				array[j] = temp;
-				++i;
-				
+			if(inputArray[i] < compareElement) {
+
+				int temp = inputArray[i];
+				inputArray[i] = inputArray[index];
+				inputArray[index] = temp;
+				index++;
+
 			}
 		}
 
-		array[end] = array[i];
-		array[i] = toStart;
-		return i;
+		inputArray[end] = inputArray[index];
+		inputArray[index] = compareElement;
+
+		return index;
 	}
- 
+
+
+	public void quickSort(int[] inputArray, int start, int end) {
+
+		if(start < end) {
+
+			int partitionIndex = partition(inputArray, start, end);
+
+			quickSort(inputArray, start, partitionIndex - 1);
+			quickSort(inputArray, partitionIndex + 1, end);
+		}
+	}
+
+	public void qSort(int[] inputArray) {
+
+		int start = 0;
+		int end = inputArray.length - 1;
+
+		quickSort(inputArray, start, end);
+	}
+
 	public static void main(String[] args) {
 
-		int[] array = {22, 42, 52, 11, 27, 41, 12};
+		QuickSort instanceSort = new QuickSort();
 
-		qSort(array, 0, 6);
+		int[] inputArray = {9, 11, 22, 2, 88, 1};
 
-		for(int element : array) {
+		instanceSort.qSort(inputArray);
 
-			System.out.println(element);
+
+		for(int element : inputArray) {
+
+			System.out.println(element + " ");
 		}
 	}
 }

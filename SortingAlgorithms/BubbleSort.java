@@ -1,34 +1,49 @@
+import java.util.*;
+
+
+// The complexity of the insertion sort is O(n^2)
+
 public class BubbleSort {
+
+	public void bSort(int[] inputArray) {
+
+		int arrayLength = inputArray.length;
+
+		boolean noChangeFlag; 
+
+		for(int i = 1; i < arrayLength; i++) {
+
+			noChangeFlag = true;
+
+			for(int j = 1; j <= arrayLength - i; j++) {
+
+				noChangeFlag = false;
+
+				if(inputArray[j-1] > inputArray[j]) {
+
+					int temp = inputArray[j-1];
+					inputArray[j-1] = inputArray[j];
+					inputArray[j] = temp;
+				}
+			}
+
+			if(noChangeFlag) break;
+		}
+
+	}
 
 	public static void main(String[] args) {
 
-		int[] array = {1,2,3,4,5,6};
+		BubbleSort instanceSort = new BubbleSort();
 
-		boolean reduce = false;
+		int[] inputArray = {9, 11, 22, 2, 88, 1};
 
-		for(int i = 0; i < array.length - 1; i++) {
+		instanceSort.bSort(inputArray);
 
-			for(int j = 0; j < array.length - i - 1; j++) {
+		for(int element : inputArray) {
 
-				if(array[j] > array[j+1]) {
-					reduce = true;
-					int temp = array[j];
-					array[j] = array[j + 1];
-					array[j + 1] = temp;
-
-				}
-
-			}
-
-			if (reduce == false) {
-				break;
-			}
-			
+			System.out.print(element + " ");
 		}
 
-		for(int elements : array) {
-
-			System.out.println(elements + " ");
-		}
 	}
 }
